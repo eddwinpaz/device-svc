@@ -23,8 +23,8 @@ func main() {
 	r.HandleFunc("/ingest", handler.Post).Methods("POST")
 	r.HandleFunc("/device/{id}", handler.Get).Methods("GET")
 
-	headers := handlers.AllowedHeaders([]string{"Content-Type", "Authorization"})
-	methods := handlers.AllowedMethods([]string{"GET", "POST", "PUT", "DELETE"})
+	headers := handlers.AllowedHeaders([]string{"Content-Type"})
+	methods := handlers.AllowedMethods([]string{"GET", "POST"})
 	origins := handlers.AllowedOrigins([]string{"*"})
 
 	port := ":9000"

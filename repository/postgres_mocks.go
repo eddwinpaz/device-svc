@@ -20,7 +20,6 @@ func (m *MockRepositoryInterface) GetDeviceByID(deviceId string) ([]*domain.Log,
 		logs = rf(deviceId)
 	} else {
 		if args.Get(0) != nil {
-			// logs = args.Get(0).([]*domain.Log)
 			logs = append(logs, &domain.Log{
 				DeviceId:    "5luNMc",
 				LogDate:     "2022-03-28 15:56:02.568 -0300",

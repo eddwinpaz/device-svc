@@ -25,8 +25,6 @@ func TestServiceGetDeviceById(t *testing.T) {
 	mockCase.On("GetDeviceByID", deviceId).Return(&mockDevice, nil)
 
 	svc := service.NewLogService(mockCase)
-
-	// Execute
 	logs, err := svc.GetDeviceByID(deviceId)
 
 	assert.NoError(t, err)

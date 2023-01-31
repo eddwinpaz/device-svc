@@ -9,14 +9,11 @@ import (
 	"github.com/eddwinpaz/device-svc/repository"
 )
 
-// Test sending proper data.
 func Test_repository_GetDeviceByID_valid(t *testing.T) {
-	// Open Database Connection
 	db, mock, err := sqlmock.New()
 	if err != nil {
 		t.Fatalf("an error '%s' was not expected when opening a stub database connection", err)
 	}
-	// Migrate the schema
 	defer db.Close() //nolint
 
 	rows := sqlmock.NewRows([]string{"event_id", "event_date", "device_id", "temp_farenheit"}).

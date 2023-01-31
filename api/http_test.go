@@ -26,7 +26,6 @@ func TestHttpGetDeviceById(t *testing.T) {
 	svc, _ := repository.NewPostgresRepository()
 	handler := NewHandler(svc)
 
-	// Need to create a router that we can pass the request through so that the vars will be added to the context
 	rr := httptest.NewRecorder()
 
 	router := mux.NewRouter()
