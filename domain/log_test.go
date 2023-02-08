@@ -15,9 +15,7 @@ func TestLogDomain(t *testing.T) {
 	}
 	assert.Equal(t, log.DeviceId, "0000")
 	assert.Equal(t, log.Temperature, 9)
-	// converted temperature
 	log.ConvertTemperatureToFarenheit()
 	assert.Equal(t, log.Temperature, 48)
-	// converted temperature
 
 }

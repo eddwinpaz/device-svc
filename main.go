@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net/http"
 	"os"
+	"time"
 
 	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
@@ -30,7 +31,16 @@ func main() {
 	port := ":9000"
 	fmt.Printf("Server running on port %s\n", port)
 
-	err := http.ListenAndServe(port, handlers.CORS(headers, methods, origins)(r))
+	srv := &http.Server{
+		Addr:              port,
+		ReadTimeout:       1 * time.Second,
+		WriteTimeout:      1 * time.Second,
+		IdleTimeout:       10 * time.Second,
+		ReadHeaderTimeout: 2 * time.Second,
+		Handler:           handlers.CORS(headers, methods, origins)(r),
+	}
+
+	err := srv.ListenAndServe()
 
 	if err != nil {
 		fmt.Print(err.Error())
