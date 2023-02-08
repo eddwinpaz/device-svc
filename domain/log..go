@@ -36,6 +36,15 @@ func (l *Log) AddFlag() {
 	}
 }
 
+func (l *LogRequest) Validate() error {
+
+	if len(l.Data) == 0 {
+		return fmt.Errorf("missing data in %#v", l)
+	}
+
+	return nil
+}
+
 func (p *LogRequest) Parse() []Log {
 
 	newLogs := []Log{}

@@ -2,6 +2,7 @@ package api
 
 import (
 	"encoding/json"
+	"io"
 	"net/http"
 
 	"github.com/gorilla/mux"
@@ -9,6 +10,8 @@ import (
 	"github.com/eddwinpaz/device-svc/domain"
 	"github.com/eddwinpaz/device-svc/service"
 )
+
+const maxSize = 100 * 1024 // 100KB
 
 type handler struct {
 	logService service.LogServiceInterface
@@ -44,13 +47,25 @@ func (h *handler) Post(w http.ResponseWriter, r *http.Request) {
 
 	l := domain.LogRequest{}
 
-	err := json.NewDecoder(r.Body).Decode(&l)
+	data, err := io.ReadAll(io.LimitReader(r.Body, maxSize))
+
+	if err != nil {
+		http.Error(w, "cant't read", http.StatusBadRequest)
+		return
+	}
+
+	err = json.Unmarshal(data, &l)
 
 	if err != nil {
 		http.Error(w, http.StatusText(
 			http.StatusBadRequest),
 			http.StatusBadRequest,
 		)
+		return
+	}
+
+	if err := l.Validate(); err != nil {
+		http.Error(w, http.StatusText(http.StatusBadRequest), http.StatusBadRequest)
 		return
 	}
 
